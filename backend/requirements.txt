@@ -8,3 +8,4 @@ shap
 m2cgen
 matplotlib
 python-multipart
+huggingface_hub
