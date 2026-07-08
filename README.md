@@ -1,21 +1,26 @@
-# Heart Health Monitoring Dashboard
+# TinyML Heart Health Monitoring Dashboard
 
-A user-friendly web application for monitoring heart health metrics and predicting patient risks using Machine Learning. This project features a responsive Streamlit frontend and a robust FastAPI backend.
+A production-ready application for real-time heart health analytics, ensemble prediction modeling, and automated C-code transpilation for resource-constrained embedded systems.
 
-## 🌟 Key Engineering Achievements (Project Highlights)
+**Live Environments:**
+- 🖥️ **Frontend UI:** [Streamlit Cloud](https://tinyml-heart-health-monitoring-dashboard-8xqogy2hibtlayt7popvs.streamlit.app/)
+- ⚙️ **Backend API:** [Hugging Face Spaces](https://huggingface.co/spaces/IDKHowToCodeFr/tinyml-backend)
 
-From a systems engineering and machine learning perspective, this platform demonstrates several advanced concepts:
+## Overview
 
-- **TinyML & Edge Computing Deployment**: Designed with hardware constraints in mind, this project transpiles complex Python ML models into highly optimized, dependency-free **C-code headers**. By utilizing **INT8 Quantization**, the system mathematically compresses 64-bit floating-point weights down to 8-bit integers, reducing the memory footprint by ~75%. This allows predictive models to be deployed directly onto severely resource-constrained microcontrollers (like the ESP32 or ARM Cortex-M) ensuring offline, ultra-low latency, and privacy-preserving inference right at the edge.
-- **Dynamic Hardware Profiling**: The deployment engine actively calculates predictive heuristics, such as expected inference latency (in microseconds) and flash memory payload size, mapped against specific embedded hardware profiles (e.g., Arduino Nano 33 BLE, Raspberry Pi Pico) before the code is even exported.
-- **Interpretable AI (SHAP)**: To solve the "black box" problem common in healthcare tech, the backend generates real-time SHAP (SHapley Additive exPlanations) values. This provides explicit, feature-level transparency into *why* the AI made a specific clinical decision, building essential trust with end-users.
-- **Robust Model Ensembling**: Rather than relying on a single algorithm, the system features a Soft-Voting Ensemble architecture that aggregates predictions across five distinct model architectures (KNN, SVM, Logistic Regression, Random Forest, and a Neural Network) to maximize predictive accuracy and minimize bias.
+This application bridges the gap between high-level cloud machine learning and low-level embedded hardware. It evaluates patient vitals using an ensemble of classifiers, provides strict clinical explainability, and compresses these Python-trained models into raw C-code ready to be flashed onto IoT devices.
 
----
+### Key Engineering Features
 
-## 🏗️ System Architecture
+- **Edge Computing & TinyML**: Transpiles complex Scikit-Learn models into highly optimized, dependency-free **C-code headers**. This allows predictive intelligence to be deployed directly to the edge, enabling offline, ultra-low latency, and privacy-preserving inference.
+- **INT8 Quantization Engine**: Mathematically scales 64-bit floating-point weights down to 8-bit integers, effectively shrinking the flash memory payload by **~75%** for resource-constrained microcontrollers.
+- **Dynamic Hardware Profiling**: The deployment suite actively simulates target hardware (e.g., *ESP32, Arduino Nano 33 BLE, Raspberry Pi Pico*) to calculate expected inference latency metrics (in µs) and final byte-size footprints prior to flashing.
+- **Interpretable AI (SHAP)**: Solves the medical "black box" concern by generating real-time SHAP feature impact analyses. This visualization proves exactly *why* the AI assigned a specific risk score based on individual patient variables.
+- **Soft-Voting Ensemble**: Rather than relying on a single algorithm, the backend aggregates outputs across five independent models (Random Forest, SVM, KNN, Logistic Regression, Neural Network) to output the highest-confidence predictions.
 
-We designed the system with strict decoupling between the client UI and the heavy-lifting ML pipeline. Doing this lets us scale instances efficiently while enabling simple API integration for other health services later on.
+## Architecture
+
+The project follows a decoupled, modular design pattern separating the client interface from the ML processing pipeline.
 
 ```mermaid
 flowchart TD
@@ -57,66 +62,87 @@ flowchart TD
     HEADER -->|Flash Firmware| MCU
 ```
 
----
+### Modular Repository Structure
 
-## 🚀 Getting Started
+```text
+TinyML-Dashboard/
+├── backend/               # FastAPI server, ML pipelines, SQLite API, C-code logic
+├── frontend/              # Streamlit UI mapping, Plotly charts, web routing
+├── model/                 # Local cache of serialized SciKit-Learn .pkl weights
+├── data/                  # Patient cohort CSVs for MLOps retraining pipelines
+├── tests/                 # Full PyTest suite for backend continuous integration
+├── .github/workflows/     # CI/CD actions for auto-syncing to Hugging Face
+└── docker-compose.yml     # Orchestration spec for local containerized deployment
+```
 
-Follow these instructions to get a copy of the project up and running on your local machine.
+## Setup & Installation
 
-### Prerequisites
+### Requirements
 - Python 3.9 or higher
+- Git
 
-### Installation
+### Installation Steps
 
 1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/IDKHowToCodeFR/TinyML-Heart-Health-Monitoring-Dashboard.git
-   cd TinyML-Heart-Health-Monitoring-Dashboard
-   ```
+```bash
+git clone https://github.com/IDKHowToCodeFR/TinyML-Heart-Health-Monitoring-Dashboard.git
+cd TinyML-Heart-Health-Monitoring-Dashboard
+```
 
-2. **Install Dependencies:**
-   Ensure you have all required libraries installed.
-   ```bash
-   pip install -r requirements.txt
-   pip install -r backend/requirements.txt
-   pip install -r frontend/requirements.txt
-   ```
+2. **Install global requirements:**
+```bash
+pip install -r requirements.txt
+pip install -r backend/requirements.txt
+pip install -r frontend/requirements.txt
+```
 
-3. **Train Initial Models:**
-   Before starting the system, generate the initial machine learning models.
-   ```bash
-   cd backend
-   python models.py
-   cd ..
-   ```
+3. **Train the baseline local `.pkl` models (Required on first run):**
+```bash
+cd backend
+python models.py 
+cd ..
+```
 
-## 💻 Usage
+## Usage
 
-### Quick Start (Windows)
-If you are on Windows, simply run the included batch file to start both the frontend and backend automatically:
+### 🚀 Quick Start (Windows)
+We've bundled an automated startup script that boots both environments natively:
 ```bash
 run.bat
 ```
 
-### Manual Start
-1. **Start the Backend:**
-   ```bash
-   cd backend
-   uvicorn main:app --host 0.0.0.0 --port 8000
-   ```
-2. **Start the Frontend:**
-   Open a new terminal window and run:
-   ```bash
-   cd frontend
-   streamlit run Home.py
-   ```
-
-### Docker
-If you prefer Docker, you can spin up the entire project with one command:
+### 🐳 Docker Deployment
+To avoid local python pathing issues, you can spin up the application via Docker Compose:
 ```bash
 docker-compose up --build
 ```
-Once running, open your browser and go to `http://localhost:8501`.
+*The Streamlit interface will bind automatically to `http://localhost:8501`, connecting directly to the internal API.*
 
-## 📜 License
-This project is licensed under the MIT License.
+### 🛠️ Manual Startup
+If you prefer running the stack manually in separate terminal instances:
+
+**Start the Backend:**
+```bash
+cd backend
+uvicorn main:app --host 0.0.0.0 --port 8000
+```
+**Start the Frontend:**
+```bash
+cd frontend
+streamlit run Home.py
+```
+
+## Development & Automation
+
+### API Documentation
+FastAPI serves auto-generated interactive documentation. While the backend is running, you can hit the endpoints directly at:
+- **Swagger UI:** `http://localhost:8000/docs`
+- **ReDoc:** `http://localhost:8000/redoc`
+
+### CI/CD Pipelines
+The project utilizes GitHub actions natively located in `.github/workflows/`:
+1. **PyTest Validation**: Verifies endpoint data sanitization and schema parameters immediately on Push/Pull Requests.
+2. **Hugging Face Sync**: Auto-deploys `main` branch updates precisely to the Hugging Face Space Docker container ensuring CI/CD alignment.
+
+## Support & License
+This project is licensed under the MIT License. Designed as a scalable, educational, and fully interpretable Edge-based Machine Learning architecture.
