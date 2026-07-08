@@ -35,6 +35,6 @@ jobs:
               folder_path='.',
               repo_id='IDKHowToCodeFr/tinyml-backend',
               repo_type='space',
-              ignore_patterns=['.git/*', '.github/*']
+              ignore_patterns=['.git/*', '.github/*', 'README.md']
           )
           "
