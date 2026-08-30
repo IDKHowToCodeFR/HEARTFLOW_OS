@@ -71,10 +71,16 @@ p, li, div {
 
 /* Glass cards for the info/success/etc boxes */
 div[data-testid="stExpander"], .stAlert {
-    background: rgba(255, 255, 255, 0.03) !important;
-    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
     border-radius: 15px !important;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px);
+}
+
+/* Ensure text inside alerts/info boxes is high-contrast white */
+.stAlert p, .stAlert div {
+    color: #ffffff !important;
+    font-weight: 500 !important;
 }
 
 .stMarkdown {
@@ -112,29 +118,29 @@ graph = graphviz.Digraph(node_attr={'shape': 'box', 'style': 'rounded,filled', '
                          graph_attr={'rankdir': 'TB', 'splines': 'ortho', 'nodesep': '1.0', 'bgcolor': 'transparent', 'fontcolor': 'white'})
 
 # Define UI & API nodes at the top
-graph.node('UI', '🖥️ Streamlit Frontend\nInteractive Dashboard (IST)', fillcolor='#ff4b4b', fontcolor='white', color='#a30000', penwidth='2')
-graph.node('API', '⚙️ FastAPI Backend\nInternal Routing (UTC)', fillcolor='#009688', fontcolor='white', color='#004d40', penwidth='2')
-graph.node('HUB', '🤗 HF Hub Dataset\nCentralized History Store', shape='folder', fillcolor='#ffcc00', fontcolor='#1a1a1a', color='#d4a017', penwidth='2')
-graph.node('DB', '🗄️ SQLite DB\nLocal Instance Cache', shape='cylinder', fillcolor='#9b59b6', fontcolor='white', color='#4a235a', penwidth='2')
+graph.node('UI', 'Streamlit Frontend\nInteractive Dashboard (IST)', fillcolor='#FFB6C1', fontcolor='#1a1a1a', color='#FF69B4', penwidth='2')
+graph.node('API', 'FastAPI Backend\nInternal Routing (UTC)', fillcolor='#ADD8E6', fontcolor='#1a1a1a', color='#4682B4', penwidth='2')
+graph.node('HUB', 'HF Hub Dataset\nCentralized History Store', shape='folder', fillcolor='#FFFACD', fontcolor='#1a1a1a', color='#F0E68C', penwidth='2')
+graph.node('DB', 'SQLite DB\nLocal Instance Cache', shape='cylinder', fillcolor='#E6E6FA', fontcolor='#1a1a1a', color='#9370DB', penwidth='2')
 
 # Core connections
-graph.edge('UI', 'API', label=' internal localhost:8000', color='#888888', fontcolor='#888888')
-graph.edge('API', 'DB', label=' Read/Write', color='#888888', fontcolor='#888888')
-graph.edge('API', 'HUB', label=' HfApi Sync (Persistent)', color='#888888', fontcolor='#888888')
+graph.edge('UI', 'API', label=' internal localhost:8000', color='#aaaaaa', fontcolor='#aaaaaa')
+graph.edge('API', 'DB', label=' Read/Write', color='#aaaaaa', fontcolor='#aaaaaa')
+graph.edge('API', 'HUB', label=' HfApi Sync (Persistent)', color='#aaaaaa', fontcolor='#aaaaaa')
 
 # Machine Learning Subgraph
 with graph.subgraph(name='cluster_ml') as ml:
-    ml.attr(label='🧠 Machine Learning & Inference Pipeline', style='dashed', color='#555555', fontcolor='#aaaaaa')
-    ml.node('ENS', 'Ensemble Engine\nSoft-Voting Aggregator', shape='diamond', fillcolor='#f2c94c', fontcolor='#1a1a1a', color='#b28900', penwidth='2')
-    ml.node('MODELS', 'Classifiers\n(RF, SVM, LogReg, NN, KNN)', fillcolor='#f2c94c', fontcolor='#1a1a1a', color='#b28900', penwidth='2')
-    ml.node('SHAP', '🔍 SHAP Explainer\nFeature Impact Analysis', fillcolor='#f2c94c', fontcolor='#1a1a1a', color='#b28900', penwidth='2')
+    ml.attr(label='Machine Learning & Inference Pipeline', style='dashed', color='#777777', fontcolor='#cccccc')
+    ml.node('ENS', 'Ensemble Engine\nSoft-Voting Aggregator', shape='diamond', fillcolor='#F0FFF0', fontcolor='#1a1a1a', color='#90EE90', penwidth='2')
+    ml.node('MODELS', 'Classifiers\n(RF, SVM, LogReg, NN, KNN)', fillcolor='#F0FFF0', fontcolor='#1a1a1a', color='#90EE90', penwidth='2')
+    ml.node('SHAP', 'SHAP Explainer\nFeature Impact Analysis', fillcolor='#F0FFF0', fontcolor='#1a1a1a', color='#90EE90', penwidth='2')
 
 # Hardware Export Subgraph
 with graph.subgraph(name='cluster_edge') as edge:
-    edge.attr(label='⚡ Hardware & Edge AI Export', style='dashed', color='#555555', fontcolor='#aaaaaa')
-    edge.node('TRANS', 'C-Code Transpiler\nINT8 Quantization', fillcolor='#2d9cdb', fontcolor='white', color='#106093', penwidth='2')
-    edge.node('HEADER', 'tinyml_model.h\nOptimized Header File', shape='note', fillcolor='#2d9cdb', fontcolor='white', color='#106093', penwidth='2')
-    edge.node('MCU', '📟 ESP32 / ARM Cortex-M\nMicrocontroller Node', fillcolor='#2d9cdb', fontcolor='white', color='#106093', penwidth='2')
+    edge.attr(label='Hardware & Edge AI Export', style='dashed', color='#777777', fontcolor='#cccccc')
+    edge.node('TRANS', 'C-Code Transpiler\nINT8 Quantization', fillcolor='#FFE4E1', fontcolor='#1a1a1a', color='#E9967A', penwidth='2')
+    edge.node('HEADER', 'tinyml_model.h\nOptimized Header File', shape='note', fillcolor='#FFE4E1', fontcolor='#1a1a1a', color='#E9967A', penwidth='2')
+    edge.node('MCU', 'ESP32 / ARM Cortex-M\nMicrocontroller Node', fillcolor='#FFE4E1', fontcolor='#1a1a1a', color='#E9967A', penwidth='2')
 
 # Map Cross-cluster edges
 graph.edge('API', 'ENS', label=' Predict', color='#cccccc', fontcolor='#cccccc')
