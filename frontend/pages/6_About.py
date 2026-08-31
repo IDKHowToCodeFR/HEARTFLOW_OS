@@ -9,7 +9,7 @@ st.markdown("""
 
 html, body, [class*="css"] { 
     font-family: 'Inter', sans-serif; 
-    color: #e0e0e0;
+    color: #FAFAFA;
 }
 
 .main {
@@ -18,73 +18,76 @@ html, body, [class*="css"] {
 
 h1 {
     font-weight: 800 !important;
-    letter-spacing: -1px !important;
-    color: #ffffff !important;
-    font-size: 3rem !important;
-    margin-bottom: 0.5rem !important;
+    letter-spacing: -1.5px !important;
+    color: #FFFFFF !important;
+    font-size: 3.2rem !important;
+    margin-bottom: 0.8rem !important;
 }
 
 h3 {
     font-weight: 700 !important;
-    color: #00f2fe !important;
-    margin-top: 2rem !important;
-    font-size: 1.8rem !important;
+    color: #AED9E0 !important; /* Sky Blue Pastel */
+    margin-top: 2.5rem !important;
+    font-size: 2rem !important;
+    letter-spacing: -0.5px !important;
 }
 
 p, li, div {
-    font-size: 1.1rem !important;
-    line-height: 1.6 !important;
+    font-size: 1.15rem !important;
+    line-height: 1.7 !important;
+    color: #E0E0E0 !important;
 }
 
 .tech-badge {
     display: inline-block; 
-    padding: 6px 16px; 
-    margin: 0 8px 10px 0;
+    padding: 8px 18px; 
+    margin: 0 10px 12px 0;
     border-radius: 50px; 
-    font-size: 0.9rem; 
+    font-size: 0.95rem; 
     font-weight: 600;
-    background: rgba(255,255,255,0.05); 
-    border: 1px solid rgba(255,255,255,0.1);
-    color: #00f2fe; 
-    transition: all 0.3s ease;
+    background: rgba(174, 217, 224, 0.1); /* Sky Blue Tint */
+    border: 1px solid rgba(174, 217, 224, 0.3);
+    color: #AED9E0; 
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .tech-badge:hover { 
-    background: rgba(0, 242, 254, 0.2); 
-    border-color: #00f2fe; 
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0, 242, 254, 0.2);
+    background: rgba(174, 217, 224, 0.2); 
+    border-color: #AED9E0; 
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(174, 217, 224, 0.15);
 }
 
 .live-link {
     text-decoration: none; 
     font-weight: 600; 
-    color: #4facfe;
-    border-bottom: 1px dashed #4facfe;
+    color: #AED9E0;
+    border-bottom: 1px dashed rgba(174, 217, 224, 0.5);
     transition: all 0.2s ease;
 }
 
 .live-link:hover { 
-    color: #00f2fe;
-    border-bottom-style: solid;
+    color: #FFFFFF;
+    border-bottom: 1px solid #FFFFFF;
 }
 
-/* Glass cards for the info/success/etc boxes */
+/* Enhanced Glass cards */
 div[data-testid="stExpander"], .stAlert {
-    background: rgba(255, 255, 255, 0.05) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    border-radius: 15px !important;
-    backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 20px !important;
+    backdrop-filter: blur(16px) saturate(180%);
+    padding: 1.5rem !important;
 }
 
-/* Ensure text inside alerts/info boxes is high-contrast white */
-.stAlert p, .stAlert div {
-    color: #ffffff !important;
-    font-weight: 500 !important;
+/* Clinical Contrast for Info Blocks */
+.stAlert p, .stAlert div, .stAlert b, .stAlert strong {
+    color: #FFFFFF !important;
+    font-size: 1.15rem !important;
 }
 
 .stMarkdown {
-    margin-bottom: 1rem;
+    margin-bottom: 1.2rem;
 }
 
 </style>
@@ -118,29 +121,29 @@ graph = graphviz.Digraph(node_attr={'shape': 'box', 'style': 'rounded,filled', '
                          graph_attr={'rankdir': 'TB', 'splines': 'ortho', 'nodesep': '1.0', 'bgcolor': 'transparent', 'fontcolor': 'white'})
 
 # Define UI & API nodes at the top
-graph.node('UI', 'Streamlit Frontend\nInteractive Dashboard (IST)', fillcolor='#FFB6C1', fontcolor='#1a1a1a', color='#FF69B4', penwidth='2')
-graph.node('API', 'FastAPI Backend\nInternal Routing (UTC)', fillcolor='#ADD8E6', fontcolor='#1a1a1a', color='#4682B4', penwidth='2')
-graph.node('HUB', 'HF Hub Dataset\nCentralized History Store', shape='folder', fillcolor='#FFFACD', fontcolor='#1a1a1a', color='#F0E68C', penwidth='2')
-graph.node('DB', 'SQLite DB\nLocal Instance Cache', shape='cylinder', fillcolor='#E6E6FA', fontcolor='#1a1a1a', color='#9370DB', penwidth='2')
+graph.node('UI', 'Streamlit Frontend\nInteractive Dashboard (IST)', fillcolor='#AED9E0', fontcolor='#0e1117', color='#AED9E0', penwidth='2')
+graph.node('API', 'FastAPI Backend\nInternal Routing (UTC)', fillcolor='#A8E6CF', fontcolor='#0e1117', color='#A8E6CF', penwidth='2')
+graph.node('HUB', 'HF Hub Dataset\nCentralized History Store', shape='folder', fillcolor='#FFF9C4', fontcolor='#0e1117', color='#FFF9C4', penwidth='2')
+graph.node('DB', 'SQLite DB\nLocal Instance Cache', shape='cylinder', fillcolor='#DCCBEC', fontcolor='#0e1117', color='#DCCBEC', penwidth='2')
 
 # Core connections
-graph.edge('UI', 'API', label=' internal localhost:8000', color='#aaaaaa', fontcolor='#aaaaaa')
-graph.edge('API', 'DB', label=' Read/Write', color='#aaaaaa', fontcolor='#aaaaaa')
-graph.edge('API', 'HUB', label=' HfApi Sync (Persistent)', color='#aaaaaa', fontcolor='#aaaaaa')
+graph.edge('UI', 'API', label=' internal localhost:8000', color='#555555', fontcolor='#aaaaaa')
+graph.edge('API', 'DB', label=' Read/Write', color='#555555', fontcolor='#aaaaaa')
+graph.edge('API', 'HUB', label=' HfApi Sync (Persistent)', color='#555555', fontcolor='#aaaaaa')
 
 # Machine Learning Subgraph
 with graph.subgraph(name='cluster_ml') as ml:
-    ml.attr(label='Machine Learning & Inference Pipeline', style='dashed', color='#777777', fontcolor='#cccccc')
-    ml.node('ENS', 'Ensemble Engine\nSoft-Voting Aggregator', shape='diamond', fillcolor='#F0FFF0', fontcolor='#1a1a1a', color='#90EE90', penwidth='2')
-    ml.node('MODELS', 'Classifiers\n(RF, SVM, LogReg, NN, KNN)', fillcolor='#F0FFF0', fontcolor='#1a1a1a', color='#90EE90', penwidth='2')
-    ml.node('SHAP', 'SHAP Explainer\nFeature Impact Analysis', fillcolor='#F0FFF0', fontcolor='#1a1a1a', color='#90EE90', penwidth='2')
+    ml.attr(label='Machine Learning & Inference Pipeline', style='dashed', color='#333333', fontcolor='#888888')
+    ml.node('ENS', 'Ensemble Engine\nSoft-Voting Aggregator', shape='diamond', fillcolor='#FFDAB9', fontcolor='#0e1117', color='#FFDAB9', penwidth='2')
+    ml.node('MODELS', 'Classifiers\n(RF, SVM, LogReg, NN, KNN)', fillcolor='#FFDAB9', fontcolor='#0e1117', color='#FFDAB9', penwidth='2')
+    ml.node('SHAP', 'SHAP Explainer\nFeature Impact Analysis', fillcolor='#FFDAB9', fontcolor='#0e1117', color='#FFDAB9', penwidth='2')
 
 # Hardware Export Subgraph
 with graph.subgraph(name='cluster_edge') as edge:
-    edge.attr(label='Hardware & Edge AI Export', style='dashed', color='#777777', fontcolor='#cccccc')
-    edge.node('TRANS', 'C-Code Transpiler\nINT8 Quantization', fillcolor='#FFE4E1', fontcolor='#1a1a1a', color='#E9967A', penwidth='2')
-    edge.node('HEADER', 'tinyml_model.h\nOptimized Header File', shape='note', fillcolor='#FFE4E1', fontcolor='#1a1a1a', color='#E9967A', penwidth='2')
-    edge.node('MCU', 'ESP32 / ARM Cortex-M\nMicrocontroller Node', fillcolor='#FFE4E1', fontcolor='#1a1a1a', color='#E9967A', penwidth='2')
+    edge.attr(label='Hardware & Edge AI Export', style='dashed', color='#333333', fontcolor='#888888')
+    edge.node('TRANS', 'C-Code Transpiler\nINT8 Quantization', fillcolor='#FFD1DC', fontcolor='#0e1117', color='#FFD1DC', penwidth='2')
+    edge.node('HEADER', 'tinyml_model.h\nOptimized Header File', shape='note', fillcolor='#FFD1DC', fontcolor='#0e1117', color='#FFD1DC', penwidth='2')
+    edge.node('MCU', 'ESP32 / ARM Cortex-M\nMicrocontroller Node', fillcolor='#FFD1DC', fontcolor='#0e1117', color='#FFD1DC', penwidth='2')
 
 # Map Cross-cluster edges
 graph.edge('API', 'ENS', label=' Predict', color='#cccccc', fontcolor='#cccccc')
