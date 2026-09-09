@@ -150,11 +150,11 @@ graph.edge('API', 'ENS', label=' Predict', color='#CBD5E1', fontcolor='#CBD5E1')
 graph.edge('ENS', 'MODELS', color='#CBD5E1')
 
 graph.edge('API', 'SHAP', label=' Explain', color='#CBD5E1', fontcolor='#CBD5E1')
-graph.edge('SHAP', 'MODELS', style='dashed', label=' Analyzes Trees', fontcolor='#64748B', color='#64748B')
+graph.edge('SHAP', 'MODELS', style='dashed', label=' Analyzes Trees', fontcolor='#CBD5E1', color='#CBD5E1')
 
 graph.edge('API', 'TRANS', label=' Export Config', color='#CBD5E1', fontcolor='#CBD5E1')
-graph.edge('TRANS', 'HEADER', label=' Scale FP32 to INT8', fontcolor='#64748B', color='#64748B')
-graph.edge('HEADER', 'MCU', label=' Flash Firmware', color='#CBD5E1')
+graph.edge('TRANS', 'HEADER', label=' Scale FP32 to INT8', fontcolor='#CBD5E1', color='#CBD5E1')
+graph.edge('HEADER', 'MCU', label=' Flash Firmware', color='#CBD5E1', fontcolor='#CBD5E1')
 
 st.graphviz_chart(graph, use_container_width=True)
 
