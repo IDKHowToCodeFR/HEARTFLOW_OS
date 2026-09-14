@@ -103,9 +103,13 @@ def history():
 async def get_dataset():
     data_path = '/app/data/patient_dataset.csv' if os.path.exists('/app/data') else '../data/patient_dataset.csv' if os.path.exists('../data') else 'data/patient_dataset.csv'
     if os.path.exists(data_path):
-        df = pd.read_csv(data_path)
-        # Return summary or partial data to avoid huge payloads
-        return df.to_dict(orient="records")
+        try:
+            # Force UTF-8 and strip column whitespace
+            df = pd.read_csv(data_path, encoding='utf-8')
+            df.columns = [c.strip() for c in df.columns]
+            return df.to_dict(orient="records")
+        except Exception as e:
+            return {"error": f"Failed to read dataset: {str(e)}"}
     return {"error": "Dataset not found"}
 
 @app.get("/sync")
