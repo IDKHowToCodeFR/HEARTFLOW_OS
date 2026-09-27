@@ -37,7 +37,7 @@ jobs:
         # We upload the root, but exclude the frontend logic and git folders.
         # This will use the Dockerfile at the root to deploy the FastAPI server.
         run: |
-          huggingface-cli upload IDKHowToCodeFr/tinyml-backend . \
+          python -m huggingface_hub.cli upload IDKHowToCodeFr/tinyml-backend . \
             --repo-type space \
             --exclude "frontend/node_modules/*" \
             --exclude "frontend/.next/*" \
