@@ -8,8 +8,8 @@ pinned: false
 ---
 
 <div align="center">
-  <h1>🫀 HeartFlow OS</h1>
-  <p><strong>Edge-Native Cardiovascular Telemetry & MLOps Engine</strong></p>
+  <h1>HeartFlow OS</h1>
+  <p><strong>Cardiovascular Telemetry & MLOps Engine</strong></p>
   
   <p>
     <img src="https://img.shields.io/badge/Next.js-16+-black.svg?style=for-the-badge&logo=next.js" alt="Next.js" />
@@ -22,58 +22,52 @@ pinned: false
 
 ---
 
-## 📖 Overview
+HeartFlow OS takes real-time patient vitals via WebSockets, runs them through an scikit-learn ensemble, and outputs probability distributions for cardiovascular conditions. It also transpiles these models into standalone C headers you can flash directly to constrained edge devices like an ESP32.
 
-HeartFlow OS is a production-grade telemetry application engineered for **real-time cardiovascular inference**. It bridges the gap between cloud-scale machine learning and low-power embedded devices. 
+## Components
 
-By ingesting high-frequency patient vitals over WebSockets, evaluating them against a distributed machine-learning ensemble, and physically compiling these models into zero-dependency C-code, HeartFlow OS provides an end-to-end pipeline from clinical dashboard to microcontroller execution.
-
-## ⚡ Tech Stack
-
-| Domain | Technologies Used | Purpose |
+| Domain | Tech | Details |
 | :--- | :--- | :--- |
-| **Frontend** | Next.js 16 (App Router), React 19, Framer Motion | High-throughput, 60fps telemetry rendering and UI |
-| **Backend Core** | FastAPI, Python 3.10+, Uvicorn | Async WebSocket orchestration and RESTful MLOps APIs |
-| **Machine Learning** | Scikit-Learn, SHAP | Soft-voting ensemble (RF, SVM, KNN, LogReg, MLP) |
-| **Database** | SQLite, `aiosqlite` | Non-blocking, asynchronous prediction logging |
-| **Edge Compiler** | Custom Python AST Transpiler | Generates `malloc`-free, INT8 quantized C-code for MCUs |
+| **Frontend** | Next.js 16, React 19 | Renders 60Hz telemetry streams using WebSockets and SVG |
+| **Backend** | FastAPI, Python 3.10 | Handles WebSocket routing and MLOps API endpoints |
+| **ML** | Scikit-Learn | Soft-voting ensemble (RF, SVM, KNN, LogReg, MLP) |
+| **Database** | SQLite, `aiosqlite` | Non-blocking telemetry and prediction logging |
+| **Compiler** | Custom AST Transpiler | Generates INT8 quantized, `malloc`-free C code |
 
-## ✨ Key Features
+## Features
 
-- **60Hz Telemetry Interface**: A brutally fast Next.js dashboard leveraging React 19 and native WebSockets to render SVG telemetry sweeps without dropping frames.
-- **Edge Inference & TinyML**: Transpiles complex `scikit-learn` decision boundaries into highly optimized, dependency-free C-code designed for constrained environments (bypassing dynamic memory allocation).
-- **INT8 Quantization Engine**: Algorithmically scales 64-bit floating-point weights to 8-bit integers, shrinking the flash memory footprint by up to **75%** without meaningful accuracy loss.
-- **Soft-Voting ML Ensemble**: Fuses predictions from five distinct model architectures to generate resilient probability distributions rather than opaque binary classifications.
-- **Zero-Downtime MLOps**: Exposes a `/retrain` pipeline allowing for dynamic CSV uploads. It automatically imputes missing data, scales features, and retrains the entire ensemble in a background thread—hot-swapping the intelligence engine without interrupting active WebSocket streams.
+- **Live Telemetry**: Streams data at 60Hz via WebSockets to a React 19 dashboard.
+- **Edge Compilation**: Converts trained scikit-learn models into C headers. The generated code requires no dependencies and does not use dynamic memory allocation.
+- **Quantization**: Scales 64-bit float weights down to 8-bit integers, reducing flash memory usage by ~75%.
+- **Soft-Voting**: Combines predictions from 5 different models to output a probability distribution.
+- **Background Retraining**: Upload new CSV data to `/retrain` and the backend will impute missing values, retrain the models in a background thread, and update the live ensemble without dropping active socket connections.
 
-## 🏗 System Architecture
+## Architecture
 
-The architecture adheres to a strictly decoupled design pattern split across the React client, FastAPI core, and C-compiler edge. 
+See [ARCHITECTURE.md](./ARCHITECTURE.md) for data flow diagrams and the file map.
 
-For a comprehensive deep-dive into data flows, system topography, and Mermaid diagrams, please read the [**Architecture Guide**](./ARCHITECTURE.md).
+## Quickstart
 
-## 🚀 Quickstart
+### 1. Backend
 
-### 1. Initialize the Core (Backend)
-
-Requires Python 3.10 or higher.
+Requires Python 3.10+.
 
 ```bash
 cd backend
 python -m venv .venv
-source .venv/bin/activate  # On Windows: .\.venv\Scripts\activate
+source .venv/bin/activate  # Windows: .\.venv\Scripts\activate
 pip install -r requirements.txt
 
-# Initialize the SQLite database and train the baseline ensemble
+# Train initial models and seed the DB
 python models.py
 
-# Launch the async server
+# Start the server
 uvicorn main:app --reload --port 8000
 ```
 
-### 2. Initialize the Client (Frontend)
+### 2. Frontend
 
-Requires Node.js 18 or higher.
+Requires Node.js 18+.
 
 ```bash
 cd frontend
@@ -81,8 +75,8 @@ npm install
 npm run dev
 ```
 
-Navigate to `http://localhost:3000` to monitor live telemetry streams, access MLOps retraining pipelines, and export your INT8 TinyML headers.
+Open `http://localhost:3000` to view the dashboard, upload new data, or export C headers.
 
-## 📄 License
+## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+MIT License. See `LICENSE`.
