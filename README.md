@@ -7,9 +7,9 @@ sdk: docker
 pinned: false
 ---
 
-# HEARTFLOW_OS // Edge-Native Cardiovascular Telemetry
+# HeartFlow OS
 
-A production-grade, edge-optimized application for real-time cardiovascular telemetry and predictive diagnostics. HeartFlow OS bridges cloud-scale machine learning with low-level embedded constraints by transpiling soft-voting ensembles directly into zero-dependency, statically allocated C-code for microcontroller deployment.
+HeartFlow OS is a telemetry application for real-time cardiovascular inference. It ingests patient vitals and evaluates them against a machine-learning ensemble to compute diagnostic probabilities. It also compiles these models into C-code headers for edge devices.
 
 ![Next.js](https://img.shields.io/badge/Next.js-16+-black.svg?style=flat&logo=next.js)
 ![React](https://img.shields.io/badge/React-19-61DAFB.svg?style=flat&logo=react)
@@ -17,29 +17,23 @@ A production-grade, edge-optimized application for real-time cardiovascular tele
 ![Scikit-Learn](https://img.shields.io/badge/scikit--learn-1.5.1+-F7931E.svg?style=flat&logo=scikit-learn)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
----
+## Overview
 
-## 🚀 Overview
+HeartFlow OS runs clinical telemetry at 60Hz. It uses native WebSockets in a Next.js dashboard to render telemetry sweeps without dropping frames. The backend transpiles scikit-learn models into `malloc`-free C-code for constrained microcontrollers.
 
-HeartFlow OS is engineered for high-frequency clinical telemetry. It ingests live patient vitals via WebSockets, evaluates telemetry against an ensemble of distributed classifiers to compute diagnostic probability distributions, and physically compresses these complex mathematical models into raw C-code headers ready to be flashed onto constrained edge silicon (e.g., ESP32, Cortex-M series).
+### Key features
 
-### Key Engineering Features
+- **Telemetry interface**: A Next.js 16 dashboard renders 60fps SVG telemetry sweeps using React 19 and WebSockets.
+- **Edge inference**: The system transpiles `scikit-learn` models into dependency-free C-code. It avoids dynamic memory allocation.
+- **INT8 quantization**: The backend algorithmically scales 64-bit floating-point weights to 8-bit integers. This shrinks the flash memory footprint by 75%.
+- **Soft-voting ensemble**: Five model architectures (Random Forest, SVM, KNN, Logistic Regression, MLP) fuse predictions into a probability distribution.
+- **Zero-downtime MLOps**: You can upload CSVs to the `/retrain` pipeline. It imputes data and retrains the ensemble in the background without dropping WebSocket connections.
 
-- **High-Throughput Telemetry Interface:** A highly optimized Next.js 16 dashboard utilizing native WebSockets and React 19 to render 60fps SVG telemetry sweeps with near-zero latency or dropped frames.
-- **Edge Inference & TinyML:** Transpiles sophisticated `scikit-learn` models into highly optimized, dependency-free C-code. Designed with strict spatial and temporal constraints in mind, bypassing dynamic memory allocation entirely (`malloc`-free).
-- **INT8 Quantization Engine:** Algorithmically scales 64-bit floating-point weights and biases down to 8-bit integers, effectively shrinking the flashed payload memory footprint by ~75% without significant accuracy degradation.
-- **Soft-Voting Ensemble:** Fuses predictions from five discrete model architectures (Random Forest, SVM, KNN, Logistic Regression, MLP Neural Network) to generate resilient probability distributions, mitigating the variance and biases of individual black-box models.
-- **Zero-Downtime MLOps:** Integrated `/retrain` pipeline allowing for real-time schema validation, data imputation, and background ensemble retraining. Hot-swaps the underlying intelligence engine globally without interrupting active clinical WebSocket streams.
+## System architecture
 
----
+The architecture uses a decoupled pattern split across the React client, FastAPI core, and C-compiler edge. Read the [architecture guide](./ARCHITECTURE.md) for data flows and design rationale.
 
-## 🏗 System Architecture
-
-The architecture adheres to a strictly decoupled, service-oriented design pattern split across the Client (React), the Core (FastAPI), and the Edge (C-Compiler).
-
-For a deep-dive into system topography, data flows, and design rationale, see [ARCHITECTURE.md](./ARCHITECTURE.md).
-
-### Repository Topology
+### Repository topology
 
 ```text
 HEARTFLOW_OS/
@@ -54,33 +48,33 @@ HEARTFLOW_OS/
 └── data/                  # Immutable patient cohort datasets for MLOps
 ```
 
----
+## Quickstart
 
-## 🛠 Quickstart Guide
+### 1. Initialize the core
 
-### 1. Initialize the Core (Backend)
-Requires Python 3.10+
+You need Python 3.10+ installed.
+
 ```bash
 cd backend
 python -m venv .venv
-source .venv/bin/activate  # Windows: `.\.venv\Scripts\activate`
+source .venv/bin/activate
 pip install -r requirements.txt
-python models.py           # Initialize database and train the baseline ensemble
+python models.py
 uvicorn main:app --reload --port 8000
 ```
 
-### 2. Initialize the Client (Frontend)
-Requires Node.js 18+
+### 2. Initialize the client
+
+You need Node.js 18+ installed.
+
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
 
-The system will boot on `localhost:3000`. Navigate to the dashboard to monitor live telemetry streams, access MLOps pipelines, and export INT8 TinyML headers.
+Navigate to `http://localhost:3000` to monitor telemetry streams, access MLOps pipelines, and export INT8 headers.
 
----
-
-## 📄 License
+## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
