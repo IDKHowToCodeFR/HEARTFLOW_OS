@@ -4,7 +4,7 @@ import numpy as np
 import os
 import sys
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../backend')))
 from preprocessing import preprocess_data, resolve_model_dir
 
 def test_resolve_model_dir():
