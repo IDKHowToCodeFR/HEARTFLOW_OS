@@ -12,6 +12,15 @@ pinned: false
   <p><strong>Cardiovascular Telemetry & Edge MLOps Engine</strong></p>
   
   <p>
+    <a href="https://huggingface.co/spaces/IDKHowToCodeFR/HEARTFLOW_OS" target="_blank">
+      <img src="https://img.shields.io/badge/🤗_HuggingFace-Live_Demo-FFD21E.svg?style=for-the-badge" alt="Hugging Face Space" />
+    </a>
+    <a href="https://heartflow-os.vercel.app" target="_blank">
+      <img src="https://img.shields.io/badge/🌐_Website-Live_App-black.svg?style=for-the-badge&logo=vercel" alt="Live Website" />
+    </a>
+  </p>
+
+  <p>
     <img src="https://img.shields.io/badge/Next.js-16+-black.svg?style=for-the-badge&logo=next.js" alt="Next.js" />
     <img src="https://img.shields.io/badge/React-19-61DAFB.svg?style=for-the-badge&logo=react&logoColor=black" alt="React" />
     <img src="https://img.shields.io/badge/FastAPI-0.111.0+-009688.svg?style=for-the-badge&logo=fastapi" alt="FastAPI" />
