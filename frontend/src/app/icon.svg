@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Deep industrial black background -->
+  <rect width="32" height="32" rx="8" fill="#09090b" />
+  <!-- Glassy inner border -->
+  <rect width="30" height="30" x="1" y="1" rx="7" fill="none" stroke="rgba(255, 255, 255, 0.15)" stroke-width="2" />
+  <!-- Mechanical Heart Pulse -->
+  <path d="M28 16h-5l-4 10L13 4l-4 12H4" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" />
+</svg>
