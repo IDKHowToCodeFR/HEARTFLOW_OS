@@ -118,9 +118,9 @@ const fadeUp = {
 
 export default function Architecture() {
   return (
-    <main className="min-h-[100dvh] bg-canvas-cream flex flex-col font-mono selection:bg-hazard selection:text-white pb-16 overflow-x-hidden">
+    <main className="min-h-dvh bg-canvas-cream flex flex-col font-mono selection:bg-hazard selection:text-white pb-16 overflow-x-hidden">
       
-      <div className="max-w-[1400px] mx-auto w-full px-4 md:px-8 py-16 flex-1 flex flex-col">
+      <div className="max-w-350 mx-auto w-full px-4 md:px-8 py-16 flex-1 flex flex-col">
         
         {/* HEADER BLOCK */}
         <motion.header 
@@ -136,7 +136,7 @@ export default function Architecture() {
               PIPELINE<br />TOPOLOGY
             </h1>
           </div>
-          <div className="text-[12px] text-slate font-bold tracking-[0.1em] uppercase text-right max-w-xs">
+          <div className="text-[12px] text-slate font-bold tracking-widest uppercase text-right max-w-xs">
             REF: HFL-OS-ARCH-01<br/>
             REV: 2.6.4<br/>
             STATUS: ACTIVE
@@ -146,7 +146,7 @@ export default function Architecture() {
         {/* BLUEPRINT GRID */}
         <motion.div 
           initial="hidden" animate="show" variants={fadeUp}
-          className="w-full bg-ink grid grid-cols-1 md:grid-cols-3 gap-[2px] p-[2px] mb-16 shadow-[16px_16px_0px_0px_rgba(230,25,25,1)]"
+          className="w-full bg-ink grid grid-cols-1 md:grid-cols-3 gap-0.5 p-0.5 mb-16 shadow-[16px_16px_0px_0px_rgba(230,25,25,1)]"
         >
           {/* COLUMN 1 */}
           <div className="bg-canvas-cream flex flex-col justify-between p-8 relative group">
@@ -219,11 +219,11 @@ export default function Architecture() {
               <div className="text-[10px] text-hazard font-bold tracking-[0.15em] mb-2 uppercase">SPEC_01</div>
               <h2 className="text-[24px] font-sans font-black tracking-[-0.02em] uppercase text-ink leading-tight">DATA SANITIZATION & FEATURES</h2>
             </div>
-            <div className="md:col-span-3 bg-ink p-[2px]">
-              <div className="bg-canvas-cream grid grid-cols-1 md:grid-cols-2 h-full gap-[2px] bg-ink">
+            <div className="md:col-span-3 bg-ink p-0.5">
+              <div className="grid grid-cols-1 md:grid-cols-2 h-full gap-0.5 bg-ink">
                 
                 <div className="bg-canvas-cream p-8">
-                  <h3 className="text-[12px] font-bold text-ink tracking-[0.1em] mb-4 uppercase border-b-2 border-ink pb-2">/// Pipeline_Execution</h3>
+                  <h3 className="text-[12px] font-bold text-ink tracking-widest mb-4 uppercase border-b-2 border-ink pb-2">/// Pipeline_Execution</h3>
                   <p className="text-[13px] text-slate leading-relaxed uppercase mb-6">
                     Raw telemetry is hostile. The ingestion script aggressively drops redundant alert flags to prevent target-leakage. Broken unicode encodings from edge sensors are patched on the fly.
                   </p>
@@ -235,7 +235,7 @@ export default function Architecture() {
                 </div>
                 
                 <div className="bg-canvas-cream p-8">
-                  <h3 className="text-[12px] font-bold text-ink tracking-[0.1em] mb-4 uppercase border-b-2 border-ink pb-2">/// Feature_Synthesis</h3>
+                  <h3 className="text-[12px] font-bold text-ink tracking-widest mb-4 uppercase border-b-2 border-ink pb-2">/// Feature_Synthesis</h3>
                   <p className="text-[13px] text-slate leading-relaxed uppercase mb-6">
                     Missing sensor drops are repaired using a fitted <code className="bg-ink text-white px-1">SimpleImputer</code>. We inject a non-linear hint directly into the AST: <code className="bg-ink text-white px-1">Risk_Severity</code>. All floats are strictly normalized.
                   </p>
@@ -264,7 +264,7 @@ export default function Architecture() {
                 When a clinician uploads a new batch dataset, the API spawns a background thread. It retrains all 5 models, calculates the weighted F1-Score against a 20% holdout, and checks <code className="bg-ink text-white px-1">registry.json</code>. If the new score degrades, the batch is destroyed. If it improves, the active `.pkl` weights are hot-swapped globally without dropping WebSocket streams.
               </p>
               
-              <div className="inline-flex flex-col md:flex-row border-2 border-ink bg-ink gap-[2px] relative z-10">
+              <div className="inline-flex flex-col md:flex-row border-2 border-ink bg-ink gap-0.5 relative z-10">
                 <div className="bg-canvas-cream text-ink px-6 py-4 font-bold text-[12px] flex items-center justify-center">
                   F1 SCORE &gt; ACTIVE_V1
                 </div>
